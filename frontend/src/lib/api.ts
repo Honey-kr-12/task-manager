@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./auth";
 
 export const api = axios.create({
-  baseURL: "https://task-manager-backend-six-hazel.vercel.app/api",
+  baseURL: "hhttps://task-manager-8jsx.vercel.app/api",
 });
 
 api.interceptors.request.use((config) => {
