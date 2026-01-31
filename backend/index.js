@@ -23,7 +23,7 @@ app.get("/", async (req, res) => {
 })
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect("mongodb+srv://shivammahrolia_db_user:6Nn95Qsw8Z6BsinD@cluster0.lpono7p.mongodb.net/?appName=Cluster0")
   .then(() => console.log("✅ MongoDB Connected Successfully"))
   .catch((err) => console.log("Mongo Error:", err));
 
