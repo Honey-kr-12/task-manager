@@ -23,9 +23,14 @@ app.get("/", async (req, res) => {
 })
 
 mongoose
-  .connect("mongodb+srv://shivammahrolia_db_user:6Nn95Qsw8Z6BsinD@cluster0.lpono7p.mongodb.net/?appName=Cluster0")
-  .then(() => console.log("✅ MongoDB Connected Successfully"))
-  .catch((err) => console.log("Mongo Error:", err));
+  .connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+  })
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => {
+    console.error("❌ MongoDB Connection Failed:", err.message);
+    process.exit(1);
+  });
 
 app.listen(process.env.PORT, () =>
   console.log(`🚀 Server running on port ${process.env.PORT}`)
