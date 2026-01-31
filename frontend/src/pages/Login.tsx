@@ -4,7 +4,12 @@ import { saveToken } from "../lib/auth";
 
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Card, CardHeader, CardTitle, CardContent } from "../components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "../components/ui/card";
 
 export default function Login({
   onLogin,
@@ -13,19 +18,23 @@ export default function Login({
   onLogin: () => void;
   onSwitchToRegister: () => void;
 }) {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async () => {
     try {
-        const res = await api.post("/auth/login", { email, password });
-    console.log(res);
-    
-        saveToken(res.data.token);
-        onLogin();
-    } catch (error:any) {
-        alert(error.response.data.message)
+      setLoading(true);
+
+      const res = await api.post("/auth/login", { email, password });
+
+      saveToken(res.data.token);
+      onLogin();
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,6 +49,7 @@ export default function Login({
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
         />
 
         <Input
@@ -47,22 +57,28 @@ export default function Login({
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={loading}
         />
 
-        <Button className="w-full" onClick={handleLogin}>
-          Login
+        {/* ✅ Loading Button */}
+        <Button
+          className="w-full"
+          onClick={handleLogin}
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </CardContent>
-      <p className="text-sm text-center text-gray-500">
-  Don’t have an account?{" "}
-  <span
-    className="text-blue-600 cursor-pointer"
-    onClick={onSwitchToRegister}
-  >
-    Signup
-  </span>
-</p>
 
+      <p className="text-sm text-center text-gray-500 pb-4">
+        Don’t have an account?{" "}
+        <span
+          className="text-blue-600 cursor-pointer"
+          onClick={onSwitchToRegister}
+        >
+          Signup
+        </span>
+      </p>
     </Card>
   );
 }
