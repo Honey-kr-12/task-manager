@@ -14,8 +14,12 @@ app.use("/api/tasks", taskRoutes);
 
 app.use("/api/auth", authRoutes);
 
-app.get("/health", async (req, res)=>{
-  res.send("worked")
+app.get("/", async (req, res) => {
+  try {
+    return res.status(201).json({ message: "Hello From the backend" })
+  } catch (err) {
+    res.status(500).json({ message: "failed" })
+  }
 })
 
 mongoose
