@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./auth";
 
 export const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://task-manager-jade-eight-36.vercel.app/api",
 });
 
 api.interceptors.request.use((config) => {
