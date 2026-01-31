@@ -14,6 +14,9 @@ app.use("/api/tasks", taskRoutes);
 
 app.use("/api/auth", authRoutes);
 
+app.get("/health", async (req, res)=>{
+  res.send("worked")
+})
 
 mongoose
   .connect(process.env.MONGO_URI)
